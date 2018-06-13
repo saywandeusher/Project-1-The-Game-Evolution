@@ -1,29 +1,19 @@
-// //square
-// c.fillStyle = "green";
-// c.fillRect(100, 100, 100, 100)
-// c.fillStyle = "pink";
-// c.fillRect(200, 200, 100, 100)
-
-// //Line
-// c.beginPath();
-// c.moveTo(50, 300);
-// c.lineTo(300, 100);
-// c.strokeStyle = "blue";
-// c.stroke();
-
+let startBtn = document.getElementById('startBtn')
+let splashScreen = document.getElementById('splashScreen')
 
 // Initial Setup
 const canvas = document.querySelector('canvas')
-const c = canvas.getContext('2d')
+const ctx = canvas.getContext('2d')
 
-canvas.width = innerWidth
-canvas.height = innerHeight
+canvas.width = 600;
+canvas.height = 600;
 
 addEventListener('resize', function(){
-    canvas.width = innerWidth
-    canvas.height = innerHeight
-
+    canvas.width = 600;
+    canvas.height = 600;
 })
+
+
 
 function randomIntFromRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
@@ -40,6 +30,12 @@ function distance(x1, y1, x2, y2) {
     return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
 }
 
+function text(txt, fnt, x, y, color) {
+    ctx.font = fnt;
+    ctx.fillStyle = color;
+    ctx.fillText(txt, x, y);
+}
+
 // Objects
 function Circle(x, y, radius, color) {
     this.x = x;
@@ -50,23 +46,23 @@ function Circle(x, y, radius, color) {
     this.update = function() {
         this.draw();
         this.draw2();
-        this.radius += 0.3;
+        this.radius -= 0.4;
     };
 
     this.draw = function() {
-    c.beginPath();
-    c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-    c.strokeStyle = 'red';
-    c.stroke();
-    c.closePath();
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+    ctx.closePath();
     };
 
     this.draw2 = function() {
-    c.beginPath();
-    c.arc(this.x, this.y, 30, 0, Math.PI * 2, false);
-    c.strokeStyle = this.color;
-    c.stroke();
-    c.closePath();
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, 10, 0, Math.PI * 2, false);
+    ctx.strokeStyle = this.color;
+    ctx.stroke();
+    ctx.closePath();
     };
 }
 
@@ -77,7 +73,7 @@ score = 0;
 
 function init() {
     for (let i = 0; i < 1; i++){
-        const radius = 0;
+        const radius = 30;
         let x = randomIntFromRange(30, canvas.width - 30);
         let y = randomIntFromRange(30, canvas.height - 30);
         const color = 'blue';
@@ -96,17 +92,23 @@ function init() {
     }
 }
 
-setInterval(function(){init()}, 2000);
+//makes the circle appear every 1sec
+setInterval(function(){init()}, 1000);
 
 //user's keydown
 document.onkeydown = function (e) {
     switch (e.key) {
         case 'ArrowUp':
-            if (circles[0].radius < 25) {
+            if (circles[0] && circles[0].radius < 12) {
+                score = score + 3;
+                console.log("+3");
                 circles.shift();
-            }else{
+            }else if (circles[0] && circles[0].radius < 20 && circles[0].radius > 12) { 
                 score = score + 1;
                 console.log("+1");
+                circles.shift();
+            }else{
+                console.log('missed')
                 circles.shift();
             }
             break;
@@ -128,15 +130,18 @@ document.onkeydown = function (e) {
 };
 
 // Animation Loop
-function animate() {
-    requestAnimationFrame(animate);
-    c.clearRect(0, 0, canvas.width, canvas.height);
+function animategame() {
+    requestAnimationFrame(animategame);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
 
     for (i = 0; i < circles.length; i++) {
-        if (circles[i] && circles[i].radius > 30) {
+        if (circles[i] && circles[i].radius < 10) {
             circles.shift();
         }
     }
+
+    text('Score: ' + score, '30px Comic Sans MS', 10, 40, 'black');
 
     circles.forEach(function (item){
     item.update();
@@ -145,9 +150,19 @@ function animate() {
 
 }
 
-init();
-animate();
+function startMenu(){
+    splashScreen.style.display = 'none';
+    menu.style.display = 'block';
+}
 
+function showCanvas(){
+    menu.style.display = 'none';
+    canvas.style.display = 'block';
+    init();
+    setTimeout(function(){animategame()},3000); 
+    setTimeout(function(){text("Are you ready?", '30px Comic Sans MS', 150, 300, 'blue')},500);
+    setTimeout(function(){text("Go!", '30px Comic Sans MS', 380, 300, 'red')},2000);    
+}
 
 
 

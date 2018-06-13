@@ -6,7 +6,19 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<canvas></canvas>
+	<div id="splashScreen" style="display: block;">
+		<h1>NO GAME NO LIFE</h1>
+	<button type="button" id="startBtn" onclick="startMenu()">Start</button>
+	</div>
+	<div id="menu" style="display: none;">
+		<h1>difficulty</h1> 
+		<button type="button" id="Easy" onclick="showCanvas()">Easy</button>
+		<button type="button" id="normal" onclick="showCanvas()">Normal</button>
+		<button type="button" id="hard" onclick="showCanvas()">Hard</button>
+		<button type="button" id="highScore" onclick="">highScore</button>
+	</div>
+	<canvas style="display: none;"></canvas>
+
 	<script src="Script.js"></script>
 </body>
 </html>
