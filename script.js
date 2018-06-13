@@ -36,6 +36,28 @@ function text(txt, fnt, x, y, color) {
     ctx.fillText(txt, x, y);
 }
 
+function fadeOut(text) {
+    var a = 1.0,   // full opacity
+        interval = setInterval(function () {
+            canvas.width = canvas.width; // Clears the canvas
+            ctx.fillStyle = "rgba(0, 0, 255, " + a + ")";
+            ctx.font = "italic 20pt Arial";
+            ctx.fillText(text, 210, 300);
+            a = a - 0.03; // decrease opacity (fade out)
+            if (a < 0) {
+                canvas.width = canvas.width;
+                clearInterval(interval);
+            }
+        }, 50); 
+}
+
+function transform() {
+    if (score > 30) {
+        backgroundImg1.style.display = 'none';
+        backgroundImg2.style.display = 'block';
+    }
+}
+
 // Objects
 function Circle(x, y, radius, color) {
     this.x = x;
@@ -74,15 +96,15 @@ score = 0;
 function init() {
     for (let i = 0; i < 1; i++){
         const radius = 30;
-        let x = randomIntFromRange(30, canvas.width - 30);
-        let y = randomIntFromRange(30, canvas.height - 30);
+        let x = randomIntFromRange(50, canvas.width - 30);
+        let y = randomIntFromRange(50, canvas.height - 30);
         const color = 'blue';
 
         if(i !== 0) {
             for (let j = 0; j < circles.length; j++) {
                 if (distance(x, y, circles[j].x, circles[j].y) - 30 * 2 < 0) {
-                    x = randomIntFromRange(30, canvas.width - 30);
-                    y = randomIntFromRange(30, canvas.height - 30); 
+                    x = randomIntFromRange(50, canvas.width - 30);
+                    y = randomIntFromRange(50, canvas.height - 30); 
 
                     j = -1;          
                 }
@@ -143,6 +165,8 @@ function animategame() {
 
     text('Score: ' + score, '30px Comic Sans MS', 10, 40, 'black');
 
+    transform();
+
     circles.forEach(function (item){
     item.update();
     })
@@ -150,18 +174,25 @@ function animategame() {
 
 }
 
-function startMenu(){
+function areYouReady() {
+    let ready = setTimeout(function(){text("Are you ready?", '30px Comic Sans MS', 150, 300, 'blue')},500);
+    setTimeout(function(){clearTimeout(ready)},2000);
+}
+
+function startMenu() {
     splashScreen.style.display = 'none';
     menu.style.display = 'block';
 }
 
-function showCanvas(){
+function showCanvas() {
     menu.style.display = 'none';
     canvas.style.display = 'block';
+    backgroundImg1.style.display = 'block';
     init();
     setTimeout(function(){animategame()},3000); 
-    setTimeout(function(){text("Are you ready?", '30px Comic Sans MS', 150, 300, 'blue')},500);
-    setTimeout(function(){text("Go!", '30px Comic Sans MS', 380, 300, 'red')},2000);    
+    // areYouReady();
+    fadeOut('Are you Ready?');
+    setTimeout(function(){text("Go!", '30px Comic Sans MS', 280, 300, 'red')},2000); 
 }
 
 

@@ -7,3 +7,17 @@ canvas {
 	margin: 0 auto;
 	margin-top: 100px;
 }
+
+#backgroundImg1 {
+	margin: 0 auto;
+	margin-top: -350px;
+	width: 300px;
+	height: 200px;
+}
+
+#backgroundImg2 {
+	margin: 0 auto;
+	margin-top: -350px;
+	width: 300px;
+	height: 200px;
+}
