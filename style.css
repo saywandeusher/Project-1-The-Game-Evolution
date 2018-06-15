@@ -1,5 +1,11 @@
-body {
-	margin: 0 auto;
+#splashScreen {
+	margin: 300px 0;
+	text-align: center;
+}
+
+#menu {
+	margin: 300px 0;
+	text-align: center;
 }
 
 canvas {
