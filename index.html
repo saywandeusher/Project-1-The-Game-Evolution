@@ -8,18 +8,17 @@
 <body>
 	<div id="splashScreen" style="display: block;">
 		<h1>EVOLUTION</h1>
-	<button type="button" id="startBtn" onclick="startMenu()">Start</button>
+	<button type="button" id="startBtn" onclick="startMenu()">Enter</button>
 	</div>
 	<div id="menu" style="display: none;">
-		<h1>difficulty</h1> 
-		<button type="button" id="Easy" onclick="showCanvas()">Easy</button>
-		<button type="button" id="normal" onclick="showCanvas()">Normal</button>
-		<button type="button" id="hard" onclick="showCanvas()">Hard</button>
-		<button type="button" id="highScore" onclick="">highScore</button>
+		<h1>Instructions</h1> 
+		<p>Using your arrow keys,<br> As the big circle closes in to the smaller circle <br> Click on the matching arrow keys to gain points.<br> The more accurately the circle matches, the high points you get.</p>
+		<button type="button" id="submit" onclick="showCanvas()">Start</button>
 	</div>
 	<canvas style="display: none;"></canvas>
-	<img id='backgroundImg1' src="img/secondForm.gif" alt="This is a gif" style="display: none;">
-	<img id='backgroundImg2' src="img/thirdForm.gif" alt="This is a gif" style="display: none;">
+	<img id='backgroundImg1' src="img/firstForm.gif" alt="This is a gif" style="display: none;">
+	<img id='backgroundImg2' src="img/secondForm.gif" alt="This is a gif" style="display: none;">
+	<img id='backgroundImg3' src="img/finalForm.gif" alt="This is a gif" style="display: none;">
 	<script src="Script.js"></script>
 </body>
 </html>

@@ -271,46 +271,62 @@ setInterval(function(){
     turnOnInitial = false;
 }, 1000);
 
+// let firstMessage = setInterval(colorText("Time is up!", '30px Comic Sans MS', 220, 300, 'red'),1000);
+let count = 0
+let countDown = 30
+var highscore = localStorage.getItem("highscore");
+
 // Animation Loop
 function animategame() {
     requestAnimationFrame(animategame);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    //If requestAnimateFrame is stopped, this code will not run and circles will stop generating
-    if( turnOnInitial == false){
-        turnOnInitial = init();
-    }
+    if  (countDown === 0) {
 
-    // creates the animation for the circle
-    circles.forEach(function (item){
-    item.update();
-    })
+        //scoreboard & timer
+        colorText('Final Score: ' + score, '30px Comic Sans MS', 10, 40, 'black');
+        colorText('Time left: ' + countDown + 's', '30px Comic Sans MS', 392, 40, 'black');
+        colorText("Time is up!", '30px Comic Sans MS', 220, 300, 'red');
 
-    //remove circle on it's own
-    for (i = 0; i < circles.length; i++) {
-        if (circles[i] && circles[i].radius < 13) {
-            circles.shift();
+    } else {
+
+        //If requestAnimateFrame is stopped, this code will not run and circles will stop generating
+        if( turnOnInitial == false){
+            turnOnInitial = init();
         }
-    }
 
-    //scoreboard
-    colorText('Score: ' + score, '30px Comic Sans MS', 10, 40, 'black');
+        // creates the animation for the circle
+        circles.forEach(function (item){
+        item.update();
+        })
 
-    //change the gif when condition is met
-    if (score > 30) {
-        backgroundImg1.style.display = 'none';
-        backgroundImg2.style.display = 'block';
-    }
+        //remove circle on it's own
+        for (i = 0; i < circles.length; i++) {
+            if (circles[i] && circles[i].radius < 13) {
+                circles.shift();
+            }
+        }
+
+        //change the gif when condition is met
+        if (score > 30) {
+            backgroundImg1.style.display = 'none';
+            backgroundImg2.style.display = 'block';
+        } 
+        if (score > 60) {
+            backgroundImg2.style.display = 'none';
+            backgroundImg3.style.display = 'block';
+        }
+
+        //scoreboard & timer
+        colorText('Score: ' + score, '30px Comic Sans MS', 10, 40, 'black');
+        colorText('Time left: ' + countDown + 's', '30px Comic Sans MS', 392, 40, 'black');
+    
+        }
 
 }
 
-let startBtn = document.getElementById('startBtn')
-let splashScreen = document.getElementById('splashScreen')
-
-function areYouReady() {
-    let ready = setTimeout(function(){text("Are you ready?", '30px Comic Sans MS', 150, 300, 'blue')},500);
-    setTimeout(function(){clearTimeout(ready)},2000);
-}
+let startBtn = document.getElementById('startBtn');
+let splashScreen = document.getElementById('splashScreen');
 
 function startMenu() {
     splashScreen.style.display = 'none';
@@ -321,11 +337,23 @@ function showCanvas() {
     menu.style.display = 'none';
     canvas.style.display = 'block';
     backgroundImg1.style.display = 'block';
-    setTimeout(function(){animategame()},3000); 
-    // areYouReady();
+    setTimeout(function(){
+        animategame()
+
+        let x = setInterval(function() {
+            countDown = countDown - 1;
+            if  (countDown === 0) {
+                clearInterval(x);
+                setTimeout(function(){document.location.reload()},6000);
+            }
+        }, 1000);
+
+    },3000); 
     fadeOut('Are you Ready?', 210, 300);
     setTimeout(function(){colorText("Go!", '30px Comic Sans MS', 280, 300, 'red')},2000);    
 }
+
+
 
 
 
