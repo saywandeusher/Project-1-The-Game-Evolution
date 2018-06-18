@@ -57,15 +57,20 @@ document.onkeydown = function (e) {
     switch (e.key) {
         case 'ArrowUp':
             if (circles[0] && circles[0].direction == 1 && circles[0].radius < 17) {
+                // colorText('Hit!', '30px Comic Sans MS', circles[0].x, circles[0].y, 'red');
+                quickPerfectHit();
                 score = score + 3;
                 console.log("+3");
                 circles.shift();
 
+
             }else if (circles[0] && circles[0].direction == 1 && circles[0].radius > 16 && circles[0].radius < 25 ) { 
+                quickHitSound();
                 score = score + 1;
                 console.log("+1");
                 circles.shift();
             }else{
+                quickMissedSound()
                 console.log('missed')
                 circles.shift();
             }
@@ -73,14 +78,17 @@ document.onkeydown = function (e) {
 
         case 'ArrowLeft':
             if (circles[0] && circles[0].direction == 2 && circles[0].radius < 17) {
+                quickPerfectHit();
                 score = score + 3;
                 console.log("+3");
                 circles.shift();
             }else if (circles[0] && circles[0].direction == 2 && circles[0].radius > 16 && circles[0].radius < 25 ) { 
+                quickHitSound();
                 score = score + 1;
                 console.log("+1");
                 circles.shift();
             }else{
+                quickMissedSound()
                 console.log('missed')
                 circles.shift();
             }
@@ -88,14 +96,17 @@ document.onkeydown = function (e) {
 
         case 'ArrowRight':
             if (circles[0] && circles[0].direction == 3 && circles[0].radius < 17) {
+                quickPerfectHit();
                 score = score + 3;
                 console.log("+3");
                 circles.shift();
             }else if (circles[0] && circles[0].direction == 3 && circles[0].radius > 16 && circles[0].radius < 25 ) { 
+                quickHitSound();
                 score = score + 1;
                 console.log("+1");
                 circles.shift();
             }else{
+                quickMissedSound()
                 console.log('missed')
                 circles.shift();
             }
@@ -103,14 +114,17 @@ document.onkeydown = function (e) {
 
         case 'ArrowDown':
             if (circles[0] && circles[0].direction == 4 && circles[0].radius < 17) {
+                quickPerfectHit();
                 score = score + 3;
                 console.log("+3");
                 circles.shift();
             }else if (circles[0] && circles[0].direction == 4 && circles[0].radius > 16 && circles[0].radius < 25 ) { 
+                quickHitSound();
                 score = score + 1;
                 console.log("+1");
                 circles.shift();
             }else{
+                quickMissedSound()
                 console.log('missed')
                 circles.shift();
             }
@@ -283,12 +297,17 @@ function animategame() {
 
     if  (countDown === 0) {
 
+        startGameMusic.volume = 0;
+        stopOnOneLoop();
+
         //scoreboard & timer
         colorText('Final Score: ' + score, '30px Comic Sans MS', 10, 40, 'black');
         colorText('Time left: ' + countDown + 's', '30px Comic Sans MS', 392, 40, 'black');
         colorText("Time is up!", '30px Comic Sans MS', 220, 300, 'red');
 
     } else {
+
+        startGameMusic.play();
 
         //If requestAnimateFrame is stopped, this code will not run and circles will stop generating
         if( turnOnInitial == false){
@@ -308,11 +327,11 @@ function animategame() {
         }
 
         //change the gif when condition is met
-        if (score > 30) {
+        if (score > 29) {
             backgroundImg1.style.display = 'none';
             backgroundImg2.style.display = 'block';
         } 
-        if (score > 60) {
+        if (score > 59) {
             backgroundImg2.style.display = 'none';
             backgroundImg3.style.display = 'block';
         }
@@ -328,6 +347,65 @@ function animategame() {
 let startBtn = document.getElementById('startBtn');
 let splashScreen = document.getElementById('splashScreen');
 
+//Get Music src
+let startGameMusic = new Audio();
+startGameMusic.src = 'sounds/VVVVVV - Soundtrack.mp3';
+let gameOverMusic = new Audio();
+gameOverMusic.src = 'sounds/gameOver.mp3';
+let hitSound = new Audio();
+hitSound.src = 'sounds/hitEffect.mp3';
+let missed = new Audio();
+missed.src = 'sounds/missedEffect.mp3'
+let perfectHit = new Audio();
+perfectHit.src = 'sounds/perfectHit.mp3'
+
+
+function quickPerfectHit() {
+    setTimeout(function(){
+        perfectHit.play();
+
+        setTimeout(function(){
+            perfectHit.pause();
+            perfectHit.currentTime = 0;
+        }, 500);
+    }, 50);
+}
+
+//stop the hit sound within half a second so that the next one can be played.
+function quickHitSound() {
+    setTimeout(function(){
+        hitSound.play();
+
+        setTimeout(function(){
+            hitSound.pause();
+            hitSound.currentTime = 0;
+        }, 500);
+    }, 50);
+}
+
+//stop the miss sound within half a second so that the next one can be played.
+function quickMissedSound() {
+    setTimeout(function(){
+        missed.play();
+
+        setTimeout(function(){
+            missed.pause();
+            missed.currentTime = 0;
+        }, 500);
+    }, 50);
+}
+
+function stopOnOneLoop() {
+    setTimeout(function(){
+        gameOverMusic.play();;
+
+        setTimeout(function(){
+            gameOverMusic.pause();
+            gameOverMusic.currentTime = 0;
+        }, 3000);
+    }, 50);
+}
+
 function startMenu() {
     splashScreen.style.display = 'none';
     menu.style.display = 'block';
@@ -338,13 +416,13 @@ function showCanvas() {
     canvas.style.display = 'block';
     backgroundImg1.style.display = 'block';
     setTimeout(function(){
-        animategame()
+        animategame();
 
         let x = setInterval(function() {
             countDown = countDown - 1;
             if  (countDown === 0) {
                 clearInterval(x);
-                setTimeout(function(){document.location.reload()},6000);
+                setTimeout(function(){document.location.reload()},4500);
             }
         }, 1000);
 

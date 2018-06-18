@@ -8,10 +8,16 @@
 	text-align: center;
 }
 
+ul {
+	margin: 0 425px;
+	width: 500px;	
+}
+
 canvas {
 	border:1px solid black;
 	margin: 0 auto;
 	margin-top: 100px;
+	background-color: rgba();
 }
 
 #backgroundImg1 {
