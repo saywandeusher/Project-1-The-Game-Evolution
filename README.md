@@ -1,4 +1,4 @@
-# Project-1-The-Game
+# Project-1-The-Game/ Evolution
 Instructions
 Controls: Up Arrow key, Down Arrow key, Left Arrow key, Right Arrow key.
 Wait for the outer circle to shrink to the same size as the inner circle.
