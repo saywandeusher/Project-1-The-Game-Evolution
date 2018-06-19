@@ -349,15 +349,15 @@ let splashScreen = document.getElementById('splashScreen');
 
 //Get Music src
 let startGameMusic = new Audio();
-startGameMusic.src = 'sounds/VVVVVV - Soundtrack.mp3';
+startGameMusic.src = 'Sounds/VVVVVV - Soundtrack.mp3';
 let gameOverMusic = new Audio();
-gameOverMusic.src = 'sounds/gameOver.mp3';
+gameOverMusic.src = 'Sounds/gameOver.mp3';
 let hitSound = new Audio();
-hitSound.src = 'sounds/hitEffect.mp3';
+hitSound.src = 'Sounds/hitEffect.mp3';
 let missed = new Audio();
-missed.src = 'sounds/missedEffect.mp3'
+missed.src = 'Sounds/missedEffect.mp3'
 let perfectHit = new Audio();
-perfectHit.src = 'sounds/perfectHit.mp3'
+perfectHit.src = 'Sounds/perfectHit.mp3'
 
 
 function quickPerfectHit() {
