@@ -28,6 +28,7 @@ canvas {
 }
 
 #backgroundImg2 {
+	opacity: 0.5;
 	margin: 0 auto;
 	margin-top: -350px;
 	width: 300px;
@@ -35,6 +36,7 @@ canvas {
 }
 
 #backgroundImg3 {
+	opacity: 0.5;
 	margin: 0 auto;
 	margin-top: -350px;
 	width: 300px;
